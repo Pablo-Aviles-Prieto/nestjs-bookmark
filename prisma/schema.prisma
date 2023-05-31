@@ -1,5 +1,13 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
+// npx PRISMA MIGRATE DEV reads the schema on schema.prisma file and creates a migrations folder
+// in that migration folder, it generate a migatrion.sql file that push it automatically to the postgres DB
+// this migrate dev, deletes all the previous data, there is other command for production
+
+// when use npx prisma migrate dev it automatically runs the npx prisma generate command
+// this PRISMA GENERATE takes the models/schema on schema.prisma and creates 
+// typescript type for that schemas, ready to use on the api importing it from @prisma/client
+// import { User } from '@prisma/client' - like this, we can use the a type created from the User Model
+
+// npx PRISMA STUDIO creates an online client so the DB is explorable from the browser
 
 generator client {
   provider = "prisma-client-js"
@@ -8,4 +16,25 @@ generator client {
 datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
+}
+
+model User {
+  id        Int      @id @default(autoincrement())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  email     String
+  hash      String // Hashed password
+  firstName String? // Its optional
+  lastName  String?
+}
+
+model Bookmark {
+  id        Int      @id @default(autoincrement())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  title       String
+  description String?
+  link        String
 }
