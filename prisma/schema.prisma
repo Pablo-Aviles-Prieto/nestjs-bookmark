@@ -7,7 +7,7 @@
 // typescript type for that schemas, ready to use on the api importing it from @prisma/client
 // import { User } from '@prisma/client' - like this, we can use the a type created from the User Model
 
-// npx PRISMA STUDIO creates an online client so the DB is explorable from the browser
+// npx PRISMA STUDIO creates an online client so the DB is explorable/editable from the browser
 
 generator client {
   provider = "prisma-client-js"
