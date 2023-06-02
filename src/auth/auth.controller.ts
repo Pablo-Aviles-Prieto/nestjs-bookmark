@@ -1,4 +1,4 @@
-import { Controller, Post } from '@nestjs/common';
+import { Controller, HttpCode, Post } from '@nestjs/common';
 import { AuthService } from './auth.service';
 
 @Controller('auth')
@@ -7,6 +7,7 @@ export class AuthController {
 
   // POST /auth/signin
   @Post('signin')
+  // @HttpCode(204) // Would return 204 as status code
   signin() {
     return this.authService.signin();
   }
