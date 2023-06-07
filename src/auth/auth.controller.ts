@@ -9,8 +9,8 @@ export class AuthController {
   // POST /auth/signin
   @Post('signin')
   // @HttpCode(204) // Would return 204 as status code
-  signin() {
-    return this.authService.signin();
+  signin(@Body() dto: AuthDto) {
+    return this.authService.signin(dto);
   }
 
   // POST /auth/signup
