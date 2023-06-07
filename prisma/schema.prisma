@@ -23,10 +23,15 @@ model User {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
-  email     String
+  email     String     @unique
   hash      String // Hashed password
   firstName String? // Its optional
   lastName  String?
+  // Added automatically after creating the relation of userId with id in Bookmark model
+  bookmarks Bookmark[]
+
+  // This renames the DB to users
+  @@map("users")
 }
 
 model Bookmark {
@@ -37,4 +42,11 @@ model Bookmark {
   title       String
   description String?
   link        String
+
+  // relation of n:1 (many bookmarks to 1 user)
+  // We tell there is a relationship between this userId from bookmark, to the id of the User model
+  userId Int
+  user   User @relation(fields: [userId], references: [id])
+
+  @@map("bookmarks")
 }
