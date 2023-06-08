@@ -11,7 +11,6 @@ export class UserController {
   @Get('me') // /users/me
   // The jwt strategy makes available a req.user obj with the payload data from the validate Fn in the strategy
   getMe(@Req() req: Request) {
-    console.log('req.user', req.user);
-    return 'user info';
+    return req.user;
   }
 }
