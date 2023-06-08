@@ -1,16 +1,21 @@
-import { Controller, Get, Req, UseGuards } from '@nestjs/common';
-import { AuthGuard } from '@nestjs/passport';
-import { Request } from 'express';
+import { Controller, Get, Patch, Req, UseGuards } from '@nestjs/common';
+import { User } from '@prisma/client';
+import { GetUser } from 'src/auth/decorator';
+import { JwtGuard } from 'src/auth/guard';
 
+// Passing the guard function, in this case from the nestjs/passport lib.
+// AuthGuard expects an identifier of the strategy to use.
+// In this case 'jwt' is created by default by passport in the strategy file.
+@UseGuards(JwtGuard)
 @Controller('users')
 export class UserController {
-  // Passing the guard function, in this case from the nestjs/passport lib.
-  // AuthGuard expects an identifier of the strategy to use.
-  // In this case 'jwt' is created by default by passport in the strategy file.
-  @UseGuards(AuthGuard('jwt'))
   @Get('me') // /users/me
-  // The jwt strategy makes available a req.user obj with the payload data from the validate Fn in the strategy
-  getMe(@Req() req: Request) {
-    return req.user;
+  // To use this decorator, the route has to be using the JwtGuard
+  getMe(@GetUser() user: User, @GetUser('email') email: string) {
+    console.log({ email });
+    return user;
   }
+
+  // @Patch()
+  // editUser() {}
 }

@@ -1,4 +1,4 @@
-import { Body, Controller, ParseIntPipe, Post } from '@nestjs/common';
+import { Body, Controller, HttpCode, HttpStatus, Post } from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { AuthDto } from './dto';
 
@@ -6,9 +6,10 @@ import { AuthDto } from './dto';
 export class AuthController {
   constructor(private authService: AuthService) {}
 
+  // Can send custom res status code passing the number or an enum from HttpStatus
+  @HttpCode(HttpStatus.OK) // instead of sending a 201, is sending a 200
   // POST /auth/signin
   @Post('signin')
-  // @HttpCode(204) // Would return 204 as status code
   signin(@Body() dto: AuthDto) {
     return this.authService.signin(dto);
   }
